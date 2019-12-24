@@ -1,0 +1,28 @@
+todo-service-test:
+  component: "@serverless/tencent-scf"
+  inputs:
+    name: todo-test
+    codeUri: ./dist
+    handler: handler.test
+
+todo-service-checkHot:
+  component: "@serverless/tencent-scf"
+  inputs:
+    name: todo-checkHot
+    codeUri: ./dist
+    handler: handler.checkHot
+
+todo-apigateway:
+  component: "@serverless/tencent-apigateway"
+  inputs:
+    serviceId: service-jywb0ve0
+    serviceName: todo
+    endpoints:
+      - path: /hot
+        method: GET
+        function:
+          functionName: todo-checkHot
+      - path: /api/todo/test
+        method: GET
+        function:
+          functionName: todo-test
